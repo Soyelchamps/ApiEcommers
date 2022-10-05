@@ -1,0 +1,11 @@
+id_product,product_name,"description text,",price,category,brand,sku,image ,quantity,isActive 
+,Producto 1,Des 101,10,varios,Champs,Producto 110,https://picsum.photos/300/331,3,1
+,Producto 2,Des 102,20,varios,Champs,Producto 220,https://picsum.photos/300/332,5,1
+,Producto 3,Des 103,30,varios,Champs,Producto 330,https://picsum.photos/300/333,7,1
+,Producto 4,Des 104,40,varios,Champs,Producto 440,https://picsum.photos/300/334,11,1
+,Producto 5,Des 105,50,varios,Champs,Producto 550,https://picsum.photos/300/335,13,1
+,Producto 6,Des 106,60,varios,Champs,Producto 660,https://picsum.photos/300/336,17,1
+,Producto 7,Des 107,70,varios,Champs,Producto 770,https://picsum.photos/300/337,23,1
+,Producto 8,Des 108,80,varios,Champs,Producto 880,https://picsum.photos/300/338,31,1
+,Producto 9,Des 109,90,varios,Champs,Producto 990,https://picsum.photos/300/339,37,1
+,Producto 10,Des 110,100,varios,Champs,Producto 10100,https://picsum.photos/300/340,42,1
