@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+const { verifyToken } = require("../middlewares");
 const {
   getProducts,
   createProduct,
@@ -17,7 +18,6 @@ const {
   modifyInvoice,
   deleteInvoice,
   loginController,
-  registerController,
 } = require("../controllers");
 
 //CRUD  PRODUCTS
@@ -43,6 +43,5 @@ router.delete("/api/v1/invoice/:idInvoice", deleteInvoice);
 
 //LOGIN
 router.post("/login", loginController);
-router.post("/register", registerController);
 
 module.exports = router;

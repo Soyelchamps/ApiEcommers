@@ -1,4 +1,5 @@
-const connect = require("../databse");
+const connect = require("../database");
+const { createToken } = require("../utils");
 
 // req ---> recibe los datos
 // res ---> responde al cliente
@@ -213,7 +214,7 @@ const createUser = async (req, res) => {
           gender,
           email,
           password,
-          type ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+          type ) VALUES ($1, $2, $3, $4, $5, crypt($6, gen_salt('bf')), $7)`,
       [first_name, last_name, date_of_birth, gender, email, password, type]
     );
     if (products.rowCount > 0) {
@@ -462,55 +463,34 @@ const deleteInvoice = async (req, res) => {
 };
 
 //LOGIN
-//Registreo
-const registerController = async (req, res) => {
-  // const { email, password } = req.body;
-  // try {
-  //   const dbResponse = await connect.query(
-  //     "INSERT INTO admins(email, password) VALUES($1, crypt($2, gen_salt('bf')))",
-  //     [email, password]
-  //   );
-  //   if (dbResponse.rowCount > 0) {
-  //     res.status(201).send({
-  //       message: "Admin creado",
-  //     });
-  //   } else {
-  //     res.status(409).send({
-  //       message: "No se pudo crear el admin.",
-  //     });
-  //   }
-  // } catch (error) {
-  //   res.status(409).send({
-  //     error,
-  //   });
-  // }
-};
 const loginController = async (req, res) => {
-  // const { email, bodyPassword } = req.body;
-  // try {
-  //   const dbResponse = await connect.query(
-  //     "SELECT * FROM admins WHERE email = $1 AND password = crypt($2, password)",
-  //     [email, bodyPassword]
-  //   );
-  //   if (dbResponse.rowCount > 0) {
-  //     const datos = {
-  //       id: dbResponse.rows(0).id,
-  //       email: dbResponse.rows(0).email,
-  //     };
-  //     const token = createToken(data);
-  //     res.status(200).send({
-  //       data: dbResponse.rows,
-  //     });
-  //   } else {
-  //     res.status(404).send({
-  //       message: "Usuario o contraseña incorrectos.",
-  //     });
-  //   }
-  // } catch (error) {
-  //   res.status(404).send({
-  //     error,
-  //   });
-  // }
+  const { email, bodyPassword } = req.body;
+
+  try {
+    const dbResponse = await connect.query(
+      "SELECT * FROM users WHERE email = $1 AND password = crypt($2, password)",
+      [email, bodyPassword]
+    );
+
+    if (dbResponse.rowCount > 0) {
+      const data = {
+        id: dbResponse.rows[0].id_user,
+        email: dbResponse.rows[0].email,
+      };
+      const token = createToken(data);
+      res.status(200).send({
+        data: dbResponse.rows,
+      });
+    } else {
+      res.status(404).send({
+        message: "Usuario o contraseña incorrectos.",
+      });
+    }
+  } catch (error) {
+    res.status(404).send({
+      error,
+    });
+  }
 };
 
 module.exports = {
@@ -530,5 +510,4 @@ module.exports = {
   modifyInvoice,
   deleteInvoice,
   loginController,
-  registerController,
 };
