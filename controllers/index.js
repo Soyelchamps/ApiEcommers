@@ -11,7 +11,6 @@ const connect = require("../databse");
 //Create products
 const createProduct = async (req, res) => {
   const {
-    id_product,
     product_name,
     description,
     price,
@@ -26,7 +25,6 @@ const createProduct = async (req, res) => {
     const products = await connect.query(
       `
       INSERT INTO products (
-        id_product, 
         product_name,
         description,
         price,
@@ -35,9 +33,8 @@ const createProduct = async (req, res) => {
         sku,
         image,
         quantity,
-        isactive ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10 )`,
+        isactive ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9 )`,
       [
-        id_product,
         product_name,
         description,
         price,
@@ -198,7 +195,6 @@ const deleteProduct = async (req, res) => {
 //Create User
 const createUser = async (req, res) => {
   const {
-    id_user,
     first_name,
     last_name,
     date_of_birth,
@@ -211,24 +207,14 @@ const createUser = async (req, res) => {
     const products = await connect.query(
       `
       INSERT INTO users (
-        id_user,
 	        first_name,
           last_name,
           date_of_birth,
           gender,
           email,
           password,
-          type ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8 )`,
-      [
-        id_user,
-        first_name,
-        last_name,
-        date_of_birth,
-        gender,
-        email,
-        password,
-        type,
-      ]
+          type ) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [first_name, last_name, date_of_birth, gender, email, password, type]
     );
     if (products.rowCount > 0) {
       res.status(200).send({
@@ -339,7 +325,7 @@ const deleteUser = async (req, res) => {
 
     if (dbResponse.rowCount > 0) {
       res.status(200).send({
-        message: "Usuario eliminada",
+        message: "Usuario eliminado",
       });
     } else {
       res.status(409).send({
@@ -475,6 +461,58 @@ const deleteInvoice = async (req, res) => {
   }
 };
 
+//LOGIN
+//Registreo
+const registerController = async (req, res) => {
+  // const { email, password } = req.body;
+  // try {
+  //   const dbResponse = await connect.query(
+  //     "INSERT INTO admins(email, password) VALUES($1, crypt($2, gen_salt('bf')))",
+  //     [email, password]
+  //   );
+  //   if (dbResponse.rowCount > 0) {
+  //     res.status(201).send({
+  //       message: "Admin creado",
+  //     });
+  //   } else {
+  //     res.status(409).send({
+  //       message: "No se pudo crear el admin.",
+  //     });
+  //   }
+  // } catch (error) {
+  //   res.status(409).send({
+  //     error,
+  //   });
+  // }
+};
+const loginController = async (req, res) => {
+  // const { email, bodyPassword } = req.body;
+  // try {
+  //   const dbResponse = await connect.query(
+  //     "SELECT * FROM admins WHERE email = $1 AND password = crypt($2, password)",
+  //     [email, bodyPassword]
+  //   );
+  //   if (dbResponse.rowCount > 0) {
+  //     const datos = {
+  //       id: dbResponse.rows(0).id,
+  //       email: dbResponse.rows(0).email,
+  //     };
+  //     const token = createToken(data);
+  //     res.status(200).send({
+  //       data: dbResponse.rows,
+  //     });
+  //   } else {
+  //     res.status(404).send({
+  //       message: "Usuario o contraseña incorrectos.",
+  //     });
+  //   }
+  // } catch (error) {
+  //   res.status(404).send({
+  //     error,
+  //   });
+  // }
+};
+
 module.exports = {
   getProducts,
   createProduct,
@@ -491,4 +529,6 @@ module.exports = {
   getInvoice,
   modifyInvoice,
   deleteInvoice,
+  loginController,
+  registerController,
 };

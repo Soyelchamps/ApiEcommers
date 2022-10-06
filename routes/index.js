@@ -16,7 +16,10 @@ const {
   getInvoice,
   modifyInvoice,
   deleteInvoice,
+  loginController,
+  registerController,
 } = require("../controllers");
+
 //CRUD  PRODUCTS
 router.post("/api/v1/product", createProduct);
 router.get("/api/v1/products", getProducts);
@@ -38,6 +41,8 @@ router.get("/api/v1/invoice/:idInvoice", getInvoice);
 router.put("/api/v1/invoice/:idInvoice", modifyInvoice);
 router.delete("/api/v1/invoice/:idInvoice", deleteInvoice);
 
-//CRUD  USERS
+//LOGIN
+router.post("/login", loginController);
+router.post("/register", registerController);
 
 module.exports = router;
