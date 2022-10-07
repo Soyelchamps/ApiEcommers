@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx nodemon functions/index.js",
     "start": "node functions/index.js",
-    "build": "netlify deploy --prod"
+    "build": "sudo netlify deploy --prod"
   },
   "repository": {
     "type": "git",
